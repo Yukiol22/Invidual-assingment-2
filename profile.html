@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your profile | Orbital Eats</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body class="profile-page-body">
+  <main class="profile-page">
+    <header class="profile-page-header">
+      <a class="profile-back-link" href="index.html#restaurants">← Restaurants</a>
+      <button class="lang-switch" id="language-toggle" type="button" title="Vaihda kieltä">FI</button>
+      <button id="profile-logout" class="profile-logout" type="button">Sign out</button>
+    </header>
+
+    <section class="profile-page-intro">
+      <p class="profile-eyebrow">YOUR ACCOUNT</p>
+      <h1>Your profile</h1>
+      <p>Manage your account and keep your favorite restaurants close.</p>
+    </section>
+
+    <div class="profile-page-grid">
+      <section class="profile-card account-card">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-eyebrow">ACCOUNT SETTINGS</p>
+            <h2 id="account-heading">Account details</h2>
+          </div>
+          <img id="profile-avatar" class="profile-page-avatar" alt="Profile picture" hidden>
+        </div>
+        <form id="profile-form" class="profile-page-form">
+          <label for="profile-username">Username</label>
+          <input id="profile-username" name="username" autocomplete="username" required>
+          <label for="profile-email">Email</label>
+          <input id="profile-email" name="email" type="email" autocomplete="email" required>
+          <button class="profile-primary-button" type="submit">Save changes</button>
+        </form>
+        <form id="avatar-form" class="profile-page-form avatar-upload-form">
+          <label for="avatar-file">Profile picture</label>
+          <input id="avatar-file" name="avatar" type="file" accept="image/*" required>
+          <button class="profile-secondary-button" type="submit">Upload picture</button>
+        </form>
+        <p id="profile-message" class="profile-message"></p>
+      </section>
+
+      <section class="profile-card favorites-card">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-eyebrow">SAVED FOR LATER</p>
+            <h2 id="favorites-heading">Your favorite restaurants</h2>
+          </div>
+          <span id="favorite-count" class="favorite-count">0</span>
+        </div>
+        <p class="favorites-intro">Your saved places, all in one spot.</p>
+        <div id="profile-favorites" class="profile-favorites">
+          <p class="profile-empty-state">Loading your favorites…</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="language.js" defer></script>
+  <script src="profile.js" defer></script>
+</body>
+</html>

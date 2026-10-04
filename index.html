@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbital Student Dining | Sector 220</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+</head>
+<body>
+  <header class="orbit-header">
+  <div class="logo">
+    <span class="hud-icon">🪐</span>
+    <h1>ORBITAL EATS</h1>
+  </div>
+
+  <nav class="nav-links">
+    <a href="#restaurants" class="nav-link active">RAVINTOLAT</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="icon-btn" title="Search">🔍</button>
+    <button class="lang-switch" id="language-toggle" type="button" title="Vaihda kieltä">FI</button>
+    
+    <div class="auth-buttons">
+      <img class="header-avatar" id="header-avatar" alt="Profile picture" hidden>
+      <button class="btn-auth btn-login" id="open-login" type="button">Kirjaudu</button>
+      <button class="btn-auth btn-signup">Rekisteröidy</button>
+    </div>
+  </div>
+</header>
+
+  <dialog class="auth-modal" id="auth-modal">
+    <div class="auth-dialog">
+      <button class="auth-close" type="button" title="Close" data-close-auth>&times;</button>
+      <h2 id="auth-title">Kirjaudu tai luo tili</h2>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-auth-view="login">Kirjaudu</button>
+        <button type="button" class="auth-tab" data-auth-view="register">Luo tili</button>
+      </div>
+      <form id="login-form" class="auth-form">
+        <label for="login-username">Käyttäjätunnus</label>
+        <input id="login-username" name="username" autocomplete="username" required>
+        <label for="login-password">Salasana</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        <button class="auth-submit" type="submit">Kirjaudu</button>
+      </form>
+      <form id="register-form" class="auth-form" hidden>
+        <label for="register-username">Käyttäjätunnus</label>
+        <input id="register-username" name="username" autocomplete="username" required>
+        <label for="register-email">Sähköposti</label>
+        <input id="register-email" name="email" type="email" autocomplete="email" required>
+        <label for="register-password">Salasana</label>
+        <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="auth-submit" type="submit">Luo tili</button>
+      </form>
+      <p class="auth-message" id="auth-message"></p>
+    </div>
+  </dialog>
+
+  <section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge">STATION FEED // SECTOR 220</span>
+      <h1 class="hero-title">Opiskelijaravintolat</h1>
+      <p class="hero-subtitle">Löydä opiskelijaravintola</p>
+
+      <form class="search-bar-container" id="restaurant-search-form">
+        <label class="visually-hidden" for="restaurant-search">Search restaurants by city, address, or name</label>
+        <input 
+          type="text" 
+          class="space-input" 
+          id="restaurant-search"
+          placeholder="Kirjoita paikkakunta, osoite tai ravintolan nimi..."
+        >
+        <button class="search-submit-btn" type="submit">Löydä</button>
+      </form>
+    </div>
+  </section>
+
+
+ 
+
+  <main class="content-display" id="menu-panel" hidden>
+    <div class="menu-layout">
+      <div class="menu-main">
+    <div class="view-toggle-bar">
+      <button class="view-btn active" data-view="daily">Päivän Menu</button>
+      <button class="view-btn" data-view="weekly">Viikon Menu</button>
+    </div>
+
+    <div id="menu-results" class="menu-grid">
+      <div class="placeholder-box">
+        <p>📡 Syötä hakusana yllä olevaan kenttään tai valitse ravintola tarkastellaksesi menuja.</p>
+      </div>
+    </div>
+      </div>
+      <aside id="restaurant-details" class="restaurant-details">
+        <h2>Restaurant details</h2>
+        <p>Select a restaurant to see its location and information.</p>
+      </aside>
+    </div>
+  </main>
+
+    <section class="filter-grid-section" id="restaurants">
+    <div class="restaurant-section-heading">
+      <div>
+        <h2 id="restaurants-heading">Find a restaurant</h2>
+        <p>Search, filter, or explore restaurants on the map.</p>
+      </div>
+      <div class="restaurant-view-toggle">
+        <button type="button" class="restaurant-view-btn active" data-restaurant-view="list">List</button>
+        <button type="button" class="restaurant-view-btn" data-restaurant-view="map">Map</button>
+      </div>
+    </div>
+    <div class="restaurant-filters">
+      <label>City
+        <select id="city-filter"><option value="">All cities</option></select>
+      </label>
+      <label>Service provider
+        <select id="provider-filter"><option value="">All providers</option></select>
+      </label>
+      <label class="favorites-filter">
+        <input type="checkbox" id="favorites-only">
+        <span>Favorites only</span>
+      </label>
+      <p id="restaurant-count" class="restaurant-count"></p>
+      <button type="button" id="clear-filters" class="clear-filters-btn">Clear filters</button>
+    </div>
+    <div class="filter-container" id="city-list">
+      <p class="placeholder-box">Loading restaurants...</p>
+    </div>
+    <p id="map-status" class="map-status" hidden></p>
+    <div id="restaurant-map" class="restaurant-map" hidden></div>
+</section>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="language.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="auth.js" defer></script>
+</body>
+</html>
